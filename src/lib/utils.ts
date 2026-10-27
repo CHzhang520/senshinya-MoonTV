@@ -34,6 +34,14 @@ export function getImageProxyUrl(): string | null {
 export function processImageUrl(originalUrl: string): string {
   if (!originalUrl) return originalUrl;
 
+  // 豆瓣图片：直接替换为 cmliussss 腾讯 CDN，绕过豆瓣防盗链
+  if (originalUrl.includes('doubanio.com')) {
+    return originalUrl.replace(
+      /img\d+\.doubanio\.com/g,
+      'img.doubanio.cmliussss.net'
+    );
+  }
+
   const proxyUrl = getImageProxyUrl();
   if (!proxyUrl) return originalUrl;
 
